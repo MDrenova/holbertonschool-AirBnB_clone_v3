@@ -113,3 +113,16 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get_count():
+        """Test .get() and .count() methods"""
+        # ... existing code ...
+
+        # Test .get()
+        assert storage.get(State, first_state_id) is not None
+        assert storage.get(State, "non_existent_id") is None
+
+        # Test .count()
+        assert storage.count() > 0
+        assert storage.count(State) > 0
+        assert storage.count("NonExistentClass") == 0
