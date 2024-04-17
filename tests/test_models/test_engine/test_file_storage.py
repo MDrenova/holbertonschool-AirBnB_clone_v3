@@ -114,15 +114,18 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    def test_get_count():
-        """Test .get() and .count() methods"""
-        # ... existing code ...
+    @unittest.skipIf(type(models.storage) == FileStorage,
+                     "Testing FileStorage")
+    def test_get(self):
+        state = State(name='Albania')
+        self.storage.new(state)
+        x = self.storage.get(State, state.id)
+        self.assertEqual(x, state)
 
-        # Test .get()
-        assert storage.get(State, first_state_id) is not None
-        assert storage.get(State, "non_existent_id") is None
-
-        # Test .count()
-        assert storage.count() > 0
-        assert storage.count(State) > 0
-        assert storage.count("NonExistentClass") == 0
+    @unittest.skipIf(models.storage == FileStorage, 'Testing Filestorage')
+    def test_count(self):
+        state = State(name='another')
+        self.storage.new(state)
+        self.assertEqual(len(self.storage.all()), self.storage.count())
+        self.assertEqual(len(self.storage.all(State)),
+                         self.storage.count(State))
