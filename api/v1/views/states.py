@@ -4,7 +4,7 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET'], strict_slashes = False)
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """Retrieves the list of all State objects"""
     states = [state.to_dict() for state in storage.all(State).values()]
