@@ -2,7 +2,7 @@
 """App"""
 
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 import os
 
@@ -15,6 +15,7 @@ app.register_blueprint(app_views)
 def close_db(error):
     """Close storage on teardown"""
     storage.close()
+
 
 @app.errorhandler(404)
 def not_found(error):
